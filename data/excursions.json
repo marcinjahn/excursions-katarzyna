@@ -1,4 +1,19 @@
 {
-    "excursions": [],
-    "orders": []
+  "excursions": [
+    {
+      "name": "Ogrodzieniec",
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "id": 1
+    },
+    {
+      "name": "Ogrodzieniec",
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "id": 2
+    }
+  ],
+  "orders": []
 }
