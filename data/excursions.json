@@ -13,6 +13,13 @@
       "adultPrice": 90,
       "childPrice": 50,
       "id": 2
+    },
+    {
+      "name": "Ogrodzieniec",
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "id": 3
     }
   ],
   "orders": []
