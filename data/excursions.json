@@ -22,5 +22,30 @@
       "id": 3
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "adultNumber": "3",
+      "childNumber": "4",
+      "id": 1
+    },
+    {
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "adultNumber": "2",
+      "childNumber": "6",
+      "id": 2
+    },
+    {
+      "description": "Lorem Ipsum",
+      "adultPrice": 90,
+      "childPrice": 50,
+      "adultNumber": "3",
+      "childNumber": "5",
+      "id": 3
+    }
+  ]
 }

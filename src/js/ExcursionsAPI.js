@@ -4,13 +4,13 @@
 
 // CLIENT
 // 1. wybrać wycieczkę przez wprowadzenie ilości zamawianych biletów w odpowiednie pola formularza i kliknięcie dodaj do zamówienia. Wiąże się to z:
-// * walidacją danych
-// * dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka
+// * BRAK walidacją danych 
+// * OK dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka
 // * aktualizowaniem ceny za całość
 // 2. potwierdzić zamówienie poprzez wprowadzenie imienia, nazwiska oraz adresu email do pola zamówienia i kliknięcie zamawiam. Wiąże się to z:
-// * walidacją danych
+// * BRAK walidacją danych
 // * wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-// * wyczyszczeniem koszyka.
+// * BRAK wyczyszczeniem koszyka.
 
 // ADMIN
 // 1. dodawanie wycieczek
@@ -147,7 +147,7 @@ class ExcursionsAPI {
                 deleteButton.className = 'excursions__field-input excursions__field-input--remove';
                 deleteButton.value = 'usuń';
                 deleteButton.type = 'button';
-                deleteButton.onclick =() => this.deleteExcursion(element.id);
+                deleteButton.onclick = () => this.deleteExcursion(element.id);
     
                 submitField.appendChild(deleteButton);
 
@@ -361,6 +361,38 @@ class ExcursionsAPI {
             console.error("Error adding new excursion:", error);
         }
     }
+
+//WALIDACJA FORMULARZA 'ORDER'
+//     const orderForm = document.querySelector('.order');
+
+// orderForm.addEventListener('submit', function(event) {
+//     event.preventDefault();
+
+//     const nameInput = document.querySelector('input[name="name"]');
+//     const emailInput = document.querySelector('input[name="email"]');
+
+//     const name = nameInput.value.trim();
+//     const email = emailInput.value.trim();
+
+//     if (name === '' || email === '' || !email.includes('@')) {
+//         const errorElement = document.createElement('p');
+//         errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+//         orderForm.appendChild(errorElement);
+//     } else {
+//         const totalPrice = document.querySelector('.order__total-price-value').innerText;
+//         const formattedTotalPrice = totalPrice.replace('PLN', '');
+//         alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+
+//         nameInput.value = '';
+//         emailInput.value = '';
+
+//         const summaryList = document.querySelector('.panel__summary');
+//         summaryList.innerHTML = '';
+
+//         totalSum = 0;
+//         calculateTotalPrice();
+//     }
+//     })
 
     init(){ 
 
