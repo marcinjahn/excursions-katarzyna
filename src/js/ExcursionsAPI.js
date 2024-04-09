@@ -1,27 +1,11 @@
-// 1. BRAK walidacja formularzy (sprawdzamy czy jest liczba >=0)
-// 2. BRAK walidacja formularza order + realizacja zamówienia jak w 
-// poprzednim task'u - LINIA 365+
-// 3. BRAK prototype ukrywamy w css, a nie komentujemy w html
-
 // CLIENT
-//DO WYJAŚNIENIA wybrać wycieczkę przez wprowadzenie ilości 
-//zamawianych biletów w odpowiednie pola formularza i kliknięcie 
-//dodaj do zamówienia. Wiąże się to z:
-// BRAK WYCIECZEK
+// 1. BRAK walidacja formularzy Client (sprawdzamy czy jest liczba >=0)
+// 2. BRAK walidacja formularza order (wymagane oba inputy nie puste + w mailu wymagana @) + realizacja zamówienia => czyści koszyk i sumę
+// 3. wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
+// 4. BRAK prototype ukrywamy w css, a nie komentujemy w html
 
-// * BRAK walidacją danych  (czy liczba >=0)
-// * BRAK dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka 
-// * BRAK aktualizowaniem ceny za całość
-// 
-//2. potwierdzić zamówienie poprzez wprowadzenie imienia, nazwiska oraz adresu email do pola zamówienia i kliknięcie zamawiam. Wiąże się to z:
-// * BRAK walidacją danych (na końcu kod z poprzedniego zadania)
-// * wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-// * BRAK wyczyszczeniem koszyka ( na końcu kod z poprzedniego zadania)
+// ADMIN - dodać do formularza edycji - analuj
 
-// ADMIN
-// 1. DO WYJAŚNIENIA dodawanie wycieczek / po wpisaniu wycieczki (nazwa, opis, ceny) + dodaj - wycieczka nie pojawia się w panelu admin
-// 2. DO WYJAŚNIENIA usuwanie wycieczek /brak wycieczek do usunięcia, więc nie mona sprawdzić
-// 3. DO WYJAŚNIENIA modyfikowanie wycieczek / jak przy usuwaniu
 
 class ExcursionsAPI {
     async getExcursionClient(){
@@ -355,46 +339,70 @@ class ExcursionsAPI {
             console.error("Error adding new excursion:", error);
         }
     }
+    
+    calculateTotalPrice() {
+        console.log('działa')
+        const totalElement = document.querySelector('.order__total-price-value');
+        totalElement.innerText = totalSum + 'PLN';
+    }
 
+    async readOrders(){
+        try {
+            const response = await fetch('http://localhost:3000/orders');
+            const data = await response.json();
+            let totalCostNumber=0
+            data.forEach(element => {
+                this.deleteOrder(element.id);
+            })
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    //WALIDACJA FORMULARZA 'ORDER'
+    async orderFormSubmit() {
+        // console.log('działa');
+        const orderForm = document.querySelector('.panel__order');
+    
+        orderForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const nameInput = document.querySelector('input[name="name"]');
+            const emailInput = document.querySelector('input[name="email"]');
+        
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+        
+            if (name === '' || email === '' || !email.includes('@')) {
+                const errorElement = document.createElement('p');
+                errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+                orderForm.appendChild(errorElement);
+            } else {
+                const totalPrice = document.querySelector('.order__total-price-value').innerText;
+                const formattedTotalPrice = totalPrice.replace('PLN', '');
+                alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+        
+                nameInput.value = '';
+                emailInput.value = '';
+        
+                const summaryList = document.querySelector('.panel__summary');
+                summaryList.innerHTML = '';
+                
+                this.readOrders();
+                // totalSum = 0;
+                // this.calculateTotalPrice();
+
+            }
+            })
+    }
+
+    
     Init(){
 
     document.querySelector("form").addEventListener("submit",(e)=>{this.addNewExcursion(e)})
     document.querySelector(".edit").addEventListener("submit",(e)=>{this.editExcursion(e)})
-
-    }
     
+    }
 }
 export default ExcursionsAPI;
 
-
-//WALIDACJA FORMULARZA 'ORDER'
-//     const orderForm = document.querySelector('.order');
-
-// orderForm.addEventListener('submit', function(event) {
-//     event.preventDefault();
-
-//     const nameInput = document.querySelector('input[name="name"]');
-//     const emailInput = document.querySelector('input[name="email"]');
-
-//     const name = nameInput.value.trim();
-//     const email = emailInput.value.trim();
-
-//     if (name === '' || email === '' || !email.includes('@')) {
-//         const errorElement = document.createElement('p');
-//         errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
-//         orderForm.appendChild(errorElement);
-//     } else {
-//         const totalPrice = document.querySelector('.order__total-price-value').innerText;
-//         const formattedTotalPrice = totalPrice.replace('PLN', '');
-//         alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
-
-//         nameInput.value = '';
-//         emailInput.value = '';
-
-//         const summaryList = document.querySelector('.panel__summary');
-//         summaryList.innerHTML = '';
-
-//         totalSum = 0;
-//         calculateTotalPrice();
-//     }
-//     })

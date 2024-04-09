@@ -1,32 +1,52 @@
 {
   "excursions": [
     {
-      "name": "Ogrodzieniec",
-      "description": "Lorem Ipsum",
-      "adultPrice": 90,
-      "childPrice": 50,
-      "id": 1
+      "id": "1",
+      "Title": "Wakacje nad Morzem Śródziemnym",
+      "Description": "Wyjątkowa okazja, aby zanurzyć się w kulturę i piękno Morza Śródziemnego. Cudowna pogoda, plaże o białym piasku i niezapomniane krajobrazy czekają na Ciebie.",
+      "Adult_cost": 800,
+      "Child_cost": 500
     },
     {
-      "name": "Ogrodzieniec",
-      "description": "Lorem Ipsum",
-      "adultPrice": 90,
-      "childPrice": 50,
-      "id": 2
+      "id": "2",
+      "Title": "Przygoda w Dziczy",
+      "Description": "Wyprawa w serce dzikiej przyrody. Odkryj nieodkryte szlaki, spotkaj egzotyczne gatunki zwierząt i przeżyj przygodę życia.",
+      "Adult_cost": 1200,
+      "Child_cost": 800
     },
     {
-      "name": "Ogrodzieniec",
-      "description": "Lorem Ipsum",
-      "adultPrice": 90,
-      "childPrice": 50,
-      "id": 3
+      "id": "4",
+      "Title": "Szlak Historyczny",
+      "Description": "Przenieś się w czasie i odkryj fascynujące historie starożytnych cywilizacji. Zobacz zabytki i miejsca, które zmieniły bieg historii.",
+      "Adult_cost": 1000,
+      "Child_cost": 700
+    },
+    {
+      "id": "5",
+      "Title": "Relaks na Wyspie Raju",
+      "Description": "Zapomnij o stresie i troskach codzienności. Odpocznij na rajskich plażach, kąp się w krystalicznie czystej wodzie i delektuj się spokojem otaczającej natury.",
+      "Adult_cost": 1600,
+      "Child_cost": 1000
     }
   ],
   "orders": [
     {
+      "Title": "Wakacje nad Morzem Śródziemnym",
+      "Description": "Wyjątkowa okazja, aby zanurzyć się w kulturę i piękno Morza Śródziemnego. Cudowna pogoda, plaże o białym piasku i niezapomniane krajobrazy czekają na Ciebie.",
+      "Adult_cost": 800,
+      "Child_cost": 500,
       "Adult_number": "2",
-      "Child_number": "4",
+      "Child_number": "3",
       "id": 1
+    },
+    {
+      "Title": "Przygoda w Dziczy",
+      "Description": "Wyprawa w serce dzikiej przyrody. Odkryj nieodkryte szlaki, spotkaj egzotyczne gatunki zwierząt i przeżyj przygodę życia.",
+      "Adult_cost": 1200,
+      "Child_cost": 800,
+      "Adult_number": "1",
+      "Child_number": "1",
+      "id": 2
     }
   ]
 }
