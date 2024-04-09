@@ -1,11 +1,11 @@
-// 1. walidacja formularzy
-// 2. walidacja formularza order + realizacja zamówienia jak w poprzednim task'u
-// 3. prototype display: none
+// 1. BRAK walidacja formularzy
+// 2. BRAK walidacja formularza order + realizacja zamówienia jak w poprzednim task'u - LINIA 365+
+// 3. BRAK prototype display: none
 
 // CLIENT
 // 1. wybrać wycieczkę przez wprowadzenie ilości zamawianych biletów w odpowiednie pola formularza i kliknięcie dodaj do zamówienia. Wiąże się to z:
 // * BRAK walidacją danych 
-// * OK dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka
+// * dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka
 // * aktualizowaniem ceny za całość
 // 2. potwierdzić zamówienie poprzez wprowadzenie imienia, nazwiska oraz adresu email do pola zamówienia i kliknięcie zamawiam. Wiąże się to z:
 // * BRAK walidacją danych

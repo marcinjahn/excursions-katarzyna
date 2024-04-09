@@ -10,7 +10,7 @@
     <h1>Panel administratora</h1>
     <section class="panel">
         <ul class="panel__excursions excursions">
-            <li data-id="1" class="excursions__item excursions__item--prototype">
+            <!-- <li data-id="1" class="excursions__item excursions__item--prototype">
                 <header class="excursions__header">
                     <h2 class="excursions__title">Ogrodzieniec</h2>
                     <p class="excursions__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet aliquam quam laboriosam quaerat temporibus dicta vitae maxime! Nemo, nobis veritatis?</p>
@@ -39,7 +39,7 @@
                         />
                     </div>
                 </form>
-            </li>
+            </li> -->
         </ul>
         <section>
             <form class="form" novalidate>
@@ -55,12 +55,12 @@
                 </div>
                 <div class="form__row">
                     <label class="form__label">
-                        Cena dorosły:<input class="form__field" type="number" name="name" />
+                        Cena dorosły:<input class="form__field" type="number" min="0" name="name" />
                     </label>
                 </div>
                 <div class="form__row">
                     <label class="form__label">
-                        Cena dziecko:<input class="order__form__field" type="number" name="name" />
+                        Cena dziecko:<input class="order__form__field" type="number" min="0" name="name" />
                     </label>
                 </div>
                 <div class="order__field order__field--submit">
@@ -75,5 +75,21 @@
         </section>
     </section>
 
+    <section class="edit_panel">
+        <form action=""  class="edit">
+          <h2>Edytuj Wycieczkę</h2>
+          <label for="title">Podaj tytuł:</label>
+          <input type="text" name="title" id="title" /><br />
+          <label for="title">Podaj Opis:</label>
+          <input type="text" name="description" id="description" /><br />
+          <label for="title">Podaj cenę dla dorosłych:</label>
+          <input type="number" name="adultPrice" id="adultPrice" /><br />
+          <label for="title">Podaj cenę dla dzieci:</label>
+          <input type="number" name="childPrice" id="childPrice" /><br />
+          <button type="submit">Zapisz zmiany</button>
+        </form>
+      </section>
+
 </body>
 </html>
+
