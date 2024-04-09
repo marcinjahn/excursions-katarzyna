@@ -1,11 +1,11 @@
-// 1. BRAK walidacja formularzy
+// 1. BRAK walidacja formularzy (czy liczba >=0)
 // 2. BRAK walidacja formularza order + realizacja zamówienia jak w poprzednim task'u - LINIA 365+
-// 3. BRAK prototype display: none
+// 3. BRAK dodajmy dla prototype style.display: 'none'
 
 // CLIENT
 // 1. wybrać wycieczkę przez wprowadzenie ilości zamawianych biletów w odpowiednie pola formularza i kliknięcie dodaj do zamówienia. Wiąże się to z:
-// * BRAK walidacją danych 
-// * dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka
+// * BRAK walidacją danych  (czy liczba >=0)
+// * dodawaniem zamówienia do panelu z prawej strony, tj. do koszyka BRAK
 // * aktualizowaniem ceny za całość
 // 2. potwierdzić zamówienie poprzez wprowadzenie imienia, nazwiska oraz adresu email do pola zamówienia i kliknięcie zamawiam. Wiąże się to z:
 // * BRAK walidacją danych
@@ -134,6 +134,7 @@ class ExcursionsAPI {
                 const submitField = document.createElement('div');
                 submitField.className = 'excursions__field excursions__field--submit';
 
+                //EDYTUJĘ WYCIECZKĘ - NIE DZIAŁA
                 const editButton = document.createElement('input');
                 editButton.className = 'excursions__field-input excursions__field-input--edit';
                 editButton.value = 'edytuj';
@@ -143,6 +144,7 @@ class ExcursionsAPI {
     
                 submitField.appendChild(editButton);
     
+                //KASUJĘ WYCIECZKĘ
                 const deleteButton = document.createElement('input');
                 deleteButton.className = 'excursions__field-input excursions__field-input--remove';
                 deleteButton.value = 'usuń';
@@ -263,6 +265,7 @@ class ExcursionsAPI {
         }
     }
 
+    //KASUJĘ WYCIECZKĘ
     async deleteExcursion(excursionId) {
         try {
             const response = await fetch(`http://localhost:3000/excursions/${excursionId}`, {
@@ -287,17 +290,19 @@ class ExcursionsAPI {
         edit_panel.setAttribute("id", id);  
     }
 
+    // EDYTUJĘ WYCIECZKĘ - PANEL ADMIN
     async editExcursion(e){
         e.preventDefault();
-        const edit_panel = document.querySelector(".edit_panel");
-        let id = edit_panel.id
-        console.log(id, edit_panel);
+        const editPanel = document.querySelector(".editPanel");
+        let id = editPanel.id
+        console.log(id, editPanel);
 
-        let content = document.querySelectorAll(`.edit`)
+        let content = document.querySelectorAll(".edit")
+        // let content = document.querySelectorAll(`.edit`)
         console.log(content);
 
         const formData ={
-            "title": content[0][0].value ,
+            "title": content[0][0].value,
             "description": content[0][1].value,
             "adultPrice": content[0][2].value,
             "childPrice":content[0][3].value 
@@ -328,6 +333,7 @@ class ExcursionsAPI {
         document.querySelector(".edit_panel").style.display = "none";
     }
 
+    // DODAJĘ NOWĄ WYCIECZKĘ
     async addNewExcursion(e) {
         e.preventDefault();
         let content = document.querySelectorAll('.form__field');
@@ -355,8 +361,9 @@ class ExcursionsAPI {
     
             const newExcursion = await response.json();
             console.log("New excursion added:", newExcursion);
-            document.querySelector('.excursions').innerHTML=''
+            document.querySelector('.excursions').innerHTML = ''; 
             this.getExcursionAdmin()
+
         } catch (error) {
             console.error("Error adding new excursion:", error);
         }
