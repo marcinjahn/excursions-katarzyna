@@ -29,24 +29,5 @@
       "Child_cost": 1000
     }
   ],
-  "orders": [
-    {
-      "Title": "Wakacje nad Morzem Śródziemnym",
-      "Description": "Wyjątkowa okazja, aby zanurzyć się w kulturę i piękno Morza Śródziemnego. Cudowna pogoda, plaże o białym piasku i niezapomniane krajobrazy czekają na Ciebie.",
-      "Adult_cost": 800,
-      "Child_cost": 500,
-      "Adult_number": "2",
-      "Child_number": "3",
-      "id": 1
-    },
-    {
-      "Title": "Przygoda w Dziczy",
-      "Description": "Wyprawa w serce dzikiej przyrody. Odkryj nieodkryte szlaki, spotkaj egzotyczne gatunki zwierząt i przeżyj przygodę życia.",
-      "Adult_cost": 1200,
-      "Child_cost": 800,
-      "Adult_number": "1",
-      "Child_number": "1",
-      "id": 2
-    }
-  ]
+  "orders": []
 }

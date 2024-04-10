@@ -4,6 +4,9 @@
     box-sizing: border-box;
 }
 
+.excursions__item--prototype, .summary__item--prototype {
+    display: none;
+}
 
 ul {
     list-style: none;

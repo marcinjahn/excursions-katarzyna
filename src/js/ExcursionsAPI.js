@@ -1,10 +1,8 @@
 // CLIENT
-// 1. BRAK walidacja formularzy Client (sprawdzamy czy jest liczba >=0)
-// 2. BRAK walidacja formularza order (wymagane oba inputy nie puste + w mailu wymagana @) + realizacja zamówienia => czyści koszyk i sumę
-// 3. wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-// 4. BRAK prototype ukrywamy w css, a nie komentujemy w html
-
-// ADMIN - dodać do formularza edycji - analuj
+// 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
+// 3. BŁĄD wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
+//ADMIN
+// 1. dodać do formularza edycji - "analuj"
 
 
 class ExcursionsAPI {
@@ -360,42 +358,73 @@ class ExcursionsAPI {
     }
 
     //WALIDACJA FORMULARZA 'ORDER'
-    async orderFormSubmit() {
-        // console.log('działa');
-        const orderForm = document.querySelector('.panel__order');
+async orderFormSubmit() {
+    // console.log('działa');
+    const orderForm = document.querySelector('.panel__order');
     
-        orderForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-        
-            const nameInput = document.querySelector('input[name="name"]');
-            const emailInput = document.querySelector('input[name="email"]');
-        
-            const name = nameInput.value.trim();
-            const email = emailInput.value.trim();
-        
-            if (name === '' || email === '' || !email.includes('@')) {
-                const errorElement = document.createElement('p');
-                errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
-                orderForm.appendChild(errorElement);
-            } else {
-                const totalPrice = document.querySelector('.order__total-price-value').innerText;
-                const formattedTotalPrice = totalPrice.replace('PLN', '');
-                alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
-        
-                nameInput.value = '';
-                emailInput.value = '';
-        
-                const summaryList = document.querySelector('.panel__summary');
-                summaryList.innerHTML = '';
-                
-                this.readOrders();
-                // totalSum = 0;
-                // this.calculateTotalPrice();
-
-            }
-            })
+    orderForm.addEventListener('submit',async function(event) {
+    event.preventDefault();
+    
+    const nameInput = document.querySelector('input[name="name"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    
+    if (name === '' || email === '' || !email.includes('@')) {
+    const errorElement = document.createElement('p');
+    errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+    orderForm.appendChild(errorElement);
+    } else {
+    let totalPrice = document.querySelector('.order__total-price-value');
+    const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
+    alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+    
+    nameInput.value = '';
+    emailInput.value = '';
+    //create there readOrders() and getOrders()
+    await this.readOrders();
+    await this.getOrders();
+    totalPrice.innerHTML="0PLN"
+    
     }
+    }.bind(this)); // Binding 'this' context to access class methods
+    };
 
+    //WALIDACJA FORMULARZY 'INPUT'
+    async inputFormValidation() {
+    // console.log('działa');
+    const inputForm = document.querySelector('.excursions__form');
+    
+    inputForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const inputChildrenNumber = document.querySelector('input[name="children"]');
+    const inputAdultsNumber = document.querySelector('input[name="adults"]');
+    
+    const adults = inputAdultsNumber.value.trim();
+    const children = inputChildrenNumber.value.trim();
+    const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
+
+    if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
+    const errorElement = document.createElement('p');
+    errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+    orderForm.appendChild(errorElement);
+    } else {
+    // let totalPrice = document.querySelector('.order__total-price-value');
+    // const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
+    // alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+    
+    // nameInput.value = '';
+    // emailInput.value = '';
+    // //create there readOrders() and getOrders()
+    // await this.readOrders();
+    // await this.getOrders();
+    // totalPrice.innerHTML="0PLN"
+    
+    }
+    }.bind(this)); // Binding 'this' context to access class methods
+    };
     
     Init(){
 
