@@ -1,7 +1,8 @@
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
 // 3. BŁĄD wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-// zmieniłam i ju dodaje, ale nie czyści html w summary__panel
+// zmieniłam i ju dodaje, ale nie czyści html w summary__panel 
+//order__total-price
 
 class ExcursionsAPI {
     async getExcursionClient(){
@@ -141,9 +142,6 @@ class ExcursionsAPI {
             console.error('Error fetching excursions:', error);
         }
     }
-
-    
-
 
     async getOrders(){
         try {
