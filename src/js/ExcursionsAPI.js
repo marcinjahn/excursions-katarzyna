@@ -1,6 +1,7 @@
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
 // 3. BŁĄD wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
+// zmieniłam i ju dodaje, ale nie czyści html w summary__panel
 
 class ExcursionsAPI {
     async getExcursionClient(){
@@ -360,6 +361,10 @@ class ExcursionsAPI {
             console.log(error);
         }
     }
+    async clearSummary(){
+        const summaryPanel = document.querySelector('.panel__summary');
+        summaryPanel.innerHTML = '';
+    }
 
     //WALIDACJA FORMULARZA 'ORDER'
 async orderFormSubmit() {
@@ -374,6 +379,9 @@ async orderFormSubmit() {
     
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
+
+    const summaryPanel = document.querySelector('.panel__summary');
+    
     
     if (name === '' || email === '' || !email.includes('@')) {
     const errorElement = document.createElement('p');
@@ -386,8 +394,10 @@ async orderFormSubmit() {
     
     nameInput.value = '';
     emailInput.value = '';
+    summaryPanel.innerHTML = '';
     //create there readOrders() and getOrders()
-    await this.readOrders();
+    // await this.readOrders();
+    // await this.clearSummary();
     await this.getOrders();
     totalPrice.innerHTML="0PLN"
     
