@@ -1,9 +1,6 @@
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
 // 3. BŁĄD wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-//ADMIN
-// 1. dodać do formularza edycji - "analuj"
-
 
 class ExcursionsAPI {
     async getExcursionClient(){
@@ -51,7 +48,13 @@ class ExcursionsAPI {
                 submitInput.className = 'excursions__field-input excursions__field-input--submit';
                 submitInput.value = 'dodaj do zamówienia';
                 submitInput.type = 'submit';
-                submitInput.addEventListener('click', (e) => this.addToOrder(e,element.id,element.Title,element.Description,element.Adult_cost,element.Child_cost));
+                submitInput.addEventListener('click', (e) => this.addToOrder(
+                    e,
+                    element.id,
+                    element.Title,
+                    element.Description,
+                    element.Adult_cost,
+                    element.Child_cost));
                 submitField.appendChild(submitInput)
 
                 form.appendChild(adultField);
@@ -187,8 +190,9 @@ class ExcursionsAPI {
         }
     }
 
-    async addToOrder(e,id,title,description,adult_cost,child_cost){
+    async addToOrder(e, id, title, description, adult_cost, child_cost){
         e.preventDefault();
+        console.log('działa');
 
         let content = document.querySelectorAll(`.field${id}`)
         const formData = {
@@ -196,9 +200,8 @@ class ExcursionsAPI {
             "Description": description,
             "Adult_cost": adult_cost,
             "Child_cost":child_cost,
-          "Adult_number":content[0][0].value,
-          "Child_number":content[0][1].value,
-  
+            "Adult_number":content[0][0].value,
+            "Child_number":content[0][1].value,
         };
   
         console.log(formData);
@@ -217,7 +220,7 @@ class ExcursionsAPI {
       
               const newExcursion = await response.json();
               console.log("New order added:", newExcursion);
-              document.querySelector('.panel__summary').innerHTML=''
+              document.querySelector('.panel__summary').innerHTML = '';
               this.getOrders()
           } catch (error) {
               console.error("Error adding new orders:", error);
@@ -294,7 +297,7 @@ class ExcursionsAPI {
     
             const newExcursion = await response.json();
             console.log("excursion edited:", newExcursion);
-            document.querySelector('.excursions').innerHTML=''
+            document.querySelector('.excursions').innerHTML = '';
             this.getExcursionAdmin()
         } catch (error) {
             console.error("Error editing excursion:", error);
@@ -303,6 +306,7 @@ class ExcursionsAPI {
         panel.classList.remove("disabledPanel")
         document.querySelector(".edit_panel").style.display="none";
     }
+    
     async addNewExcursion(e) {
         e.preventDefault();
       let content = document.querySelectorAll('.form__field')
