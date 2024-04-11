@@ -1,9 +1,9 @@
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
-// 3. BŁĄD wysłaniem zamówienia do bazy danych (u nas to będzie API uruchomione dzięki JSON Server)
-// zmieniłam i ju dodaje, ale nie czyści html w summary__panel 
-//order__total-price
+// 3. BŁĄD nie czyści html w summary__panel linia 398
 
+// 1. komunikacja z api w ExcursionsAPI
+// 2. inny plik na wszystkie funkcje
 class ExcursionsAPI {
     async getExcursionClient(){
         try {
@@ -192,6 +192,7 @@ class ExcursionsAPI {
     async addToOrder(e, id, title, description, adult_cost, child_cost){
         e.preventDefault();
         console.log('działa');
+        
 
         let content = document.querySelectorAll(`.field${id}`)
         const formData = {
@@ -202,7 +203,8 @@ class ExcursionsAPI {
             "Adult_number":content[0][0].value,
             "Child_number":content[0][1].value,
         };
-  
+        
+        // to uruchamiamy (wysyłamy do bazy) dopiero przy zamówieniu
         console.log(formData);
           try {
               const response = await fetch("http://localhost:3000/orders", {
@@ -232,7 +234,7 @@ class ExcursionsAPI {
                 method: 'DELETE'
             });
             const data = await response.json();
-            console.log('Order deleted:', data);
+            // console.log('Order deleted:', data);
             document.querySelector('.panel__summary').innerHTML=''
             this.getOrders();
         } catch (error) {
@@ -365,7 +367,7 @@ class ExcursionsAPI {
     }
 
     //WALIDACJA FORMULARZA 'ORDER'
-async orderFormSubmit() {
+    async orderFormSubmit() {
     // console.log('działa');
     const orderForm = document.querySelector('.panel__order');
     
@@ -374,12 +376,11 @@ async orderFormSubmit() {
     
     const nameInput = document.querySelector('input[name="name"]');
     const emailInput = document.querySelector('input[name="email"]');
-    
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
 
     const summaryPanel = document.querySelector('.panel__summary');
-    
+    console.log(summaryPanel.innerText);
     
     if (name === '' || email === '' || !email.includes('@')) {
     const errorElement = document.createElement('p');
@@ -392,12 +393,12 @@ async orderFormSubmit() {
     
     nameInput.value = '';
     emailInput.value = '';
-    summaryPanel.innerHTML = '';
+    summaryPanel.innerText = ''; //NIE DZIAŁA
     //create there readOrders() and getOrders()
     // await this.readOrders();
     // await this.clearSummary();
     await this.getOrders();
-    totalPrice.innerHTML="0PLN"
+    totalPrice.innerHTML="0 PLN"
     
     }
     }.bind(this)); // Binding 'this' context to access class methods
@@ -413,10 +414,10 @@ async orderFormSubmit() {
     
     const inputChildrenNumber = document.querySelector('input[name="children"]');
     const inputAdultsNumber = document.querySelector('input[name="adults"]');
-    
     const adults = inputAdultsNumber.value.trim();
     const children = inputChildrenNumber.value.trim();
     const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
+    console.log(adults, children);
 
     if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
     const errorElement = document.createElement('p');
