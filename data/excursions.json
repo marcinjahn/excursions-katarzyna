@@ -38,6 +38,24 @@
       "Adult_number": "2",
       "Child_number": "4",
       "id": 1
+    },
+    {
+      "Title": "Wakacje nad Morzem Śródziemnym",
+      "Description": "Wyjątkowa okazja, aby zanurzyć się w kulturę i piękno Morza Śródziemnego. Cudowna pogoda, plaże o białym piasku i niezapomniane krajobrazy czekają na Ciebie.",
+      "Adult_cost": 800,
+      "Child_cost": 500,
+      "Adult_number": "2",
+      "Child_number": "1",
+      "id": 2
+    },
+    {
+      "Title": "Szlak Historyczny",
+      "Description": "Przenieś się w czasie i odkryj fascynujące historie starożytnych cywilizacji. Zobacz zabytki i miejsca, które zmieniły bieg historii.",
+      "Adult_cost": 1000,
+      "Child_cost": 700,
+      "Adult_number": "mnmnbm",
+      "Child_number": "",
+      "id": 3
     }
   ]
 }

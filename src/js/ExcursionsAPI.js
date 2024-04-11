@@ -1,8 +1,9 @@
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
-// 3. BŁĄD nie czyści html w summary__panel linia 398
+// 2. BŁĄD nie czyści html w summary__panel linia 398
 
-// 1. komunikacja z api w ExcursionsAPI
+//DODATKOWO
+// 1. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
 // 2. inny plik na wszystkie funkcje
 class ExcursionsAPI {
     async getExcursionClient(){
@@ -57,6 +58,12 @@ class ExcursionsAPI {
                     element.Description,
                     element.Adult_cost,
                     element.Child_cost));
+
+                //walidacja inputów
+                // if(this.inputFormValidation()) {
+
+                // };
+
                 submitField.appendChild(submitInput)
 
                 form.appendChild(adultField);
@@ -423,6 +430,7 @@ class ExcursionsAPI {
     const errorElement = document.createElement('p');
     errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
     orderForm.appendChild(errorElement);
+    
     } else {
     // let totalPrice = document.querySelector('.order__total-price-value');
     // const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
