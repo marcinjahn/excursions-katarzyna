@@ -1,16 +1,86 @@
+// function createExcursion(element) {
+//     console.log('działa');
+//     const li = document.createElement('li');
+//                 li.className = 'excursions__item  ';
+
+//                 const header = document.createElement('header');
+//                 const title = document.createElement('h2');
+//                 title.className = 'excursions__title';
+//                 title.textContent = element.Title;
+//                 const description = document.createElement('p');
+//                 description.className = 'excursions__description';
+//                 description.textContent = element.Description;
+//                 header.appendChild(title);
+//                 header.appendChild(description);
+
+//                 const form = document.createElement('form');
+//                 form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
+//                 form.addEventListener("submit",(e)=>{this.addToOrder(e, element.id)})
+
+//                 const adultField = document.createElement('div');
+//                 adultField.className = 'excursions__field';
+//                 adultField.innerHTML = `
+//                     <label class="excursions__field-name">
+//                         Dorosły: <b>${element.Adult_cost}</b>PLN x <input class="excursions__field-input" name="adults" />
+//                     </label>
+//                 `;
+
+//                 const childField = document.createElement('div');
+//                 childField.className = 'excursions__field';
+//                 childField.innerHTML = `
+//                     <label class="excursions__field-name">
+//                         Dziecko: <b>${element.Child_cost}</b>PLN x <input class="excursions__field-input" name="children" />
+//                     </label>
+//                 `;
+
+//                 const submitField = document.createElement('div');
+//                 submitField.className = `excursions__field excursions__field--submit`;
+
+//                 const submitInput = document.createElement('input');
+//                 submitInput.className = 'excursions__field-input excursions__field-input--submit';
+//                 submitInput.value = 'dodaj do zamówienia';
+//                 submitInput.type = 'submit';
+//                 submitInput.addEventListener('click', (e) => this.addToOrder(
+//                     e,
+//                     element.id,
+//                     element.Title,
+//                     element.Description,
+//                     element.Adult_cost,
+//                     element.Child_cost));
+
+//                 //walidacja inputów
+//                 // if(this.inputFormValidation()) {
+
+//                 // };
+
+//                 submitField.appendChild(submitInput)
+
+//                 form.appendChild(adultField);
+//                 form.appendChild(childField);
+//                 form.appendChild(submitField);
+
+//                 li.appendChild(header);
+//                 li.appendChild(form);
+
+//                 document.querySelector('.excursions').appendChild(li);
+// }
+
 // CLIENT
-// 1. BŁĄD */ walidacja formularzy Client (sprawdzamy czy jest liczba >=0) linia 406-411
+// 1. BŁĄD */ walidacja formularzy Client - waliduje tylko field1, do ustawienia dla wszystkich `field${id}`
 // 2. BŁĄD nie czyści html w summary__panel linia 398
 
 //DODATKOWO
 // 1. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
-// 2. inny plik na wszystkie funkcje
+// 2. inny plik/inne pliki na wszystkie funkcje
 class ExcursionsAPI {
     async getExcursionClient(){
         try {
             const response = await fetch('http://localhost:3000/excursions');
             const data = await response.json();
             data.forEach(element => {
+
+                // createExcursion(element);
+                // tutaj wstawiam funkcję zapisaną w osobnym pliku (wszystko ponizej to w osobnej funkcji)
                 const li = document.createElement('li');
                 li.className = 'excursions__item  ';
 
@@ -25,8 +95,8 @@ class ExcursionsAPI {
                 header.appendChild(description);
 
                 const form = document.createElement('form');
-                form.className = `excursions__form field${element.id}`;
-                form.addEventListener("submit",(e)=>{this.addToOrder(e,element.id)})
+                form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
+                form.addEventListener("submit",(e)=>{this.addToOrder(e, element.id)})
 
                 const adultField = document.createElement('div');
                 adultField.className = 'excursions__field';
@@ -124,7 +194,7 @@ class ExcursionsAPI {
                 editButton.className = 'excursions__field-input excursions__field-input--edit';
                 editButton.value = 'edytuj';
                 editButton.type = 'button';
-                editButton.addEventListener('click', (e) => this.OpenEditPanel(e,element.id));
+                editButton.addEventListener('click', (e) => this.OpenEditPanel(e, element.id));
     
                 submitField.appendChild(editButton);
     
@@ -199,7 +269,54 @@ class ExcursionsAPI {
     async addToOrder(e, id, title, description, adult_cost, child_cost){
         e.preventDefault();
         console.log('działa');
+
+
+        function inputFormValidation() {
+            console.log('działa validate.js');
+            const inputForm = document.querySelector('.field1');
+            
+            //USTAWIENIE DLA WSZYSTKICH INPUTÓW
+            // let inputForm = document.querySelectorAll(`.field${id}`)
+            
+            const inputChildrenNumber = inputForm.querySelector('input[name="children"]');
+            const inputAdultsNumber = inputForm.querySelector('input[name="adults"]');
+
+            //ustawiam wartości domyślne inputów na 0
+            inputAdultsNumber.defaultValue = '0';
+            inputChildrenNumber.defaultValue = '0';
+
+            const adults = inputAdultsNumber.value.trim();
+            const children = inputChildrenNumber.value.trim();
+            const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
+            console.log(adults, children);
         
+            if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
+            const errorElement = document.createElement('p');
+            errorElement.style.color = 'red';
+            errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+            console.log(inputForm);
+            inputForm.appendChild(errorElement);
+            return false;
+
+            } else {
+            // let totalPrice = document.querySelector('.order__total-price-value');
+            // const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
+            // alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+            
+            // nameInput.value = '';
+            // emailInput.value = '';
+            // //create there readOrders() and getOrders()
+            // await this.readOrders();
+            // await this.getOrders();
+            // totalPrice.innerHTML="0PLN"
+            return true;
+            }
+            };
+
+            if(!inputFormValidation()) {
+                return;
+            }
+
 
         let content = document.querySelectorAll(`.field${id}`)
         const formData = {
@@ -360,7 +477,7 @@ class ExcursionsAPI {
         try {
             const response = await fetch('http://localhost:3000/orders');
             const data = await response.json();
-            let totalCostNumber=0
+            let totalCostNumber = 0;
             data.forEach(element => {
                 this.deleteOrder(element.id);
             })
@@ -368,14 +485,14 @@ class ExcursionsAPI {
             console.log(error);
         }
     }
-    async clearSummary(){
-        const summaryPanel = document.querySelector('.panel__summary');
-        summaryPanel.innerHTML = '';
-    }
+    // async clearSummary(){
+    //     const summaryPanel = document.querySelector('.panel__summary');
+    //     summaryPanel.innerHTML = '';
+    // }
 
     //WALIDACJA FORMULARZA 'ORDER'
     async orderFormSubmit() {
-    // console.log('działa');
+    // console.log('działa ten!');
     const orderForm = document.querySelector('.panel__order');
     
     orderForm.addEventListener('submit',async function(event) {
@@ -392,6 +509,7 @@ class ExcursionsAPI {
     if (name === '' || email === '' || !email.includes('@')) {
     const errorElement = document.createElement('p');
     errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+    // console.log(orderForm)
     orderForm.appendChild(errorElement);
     } else {
     let totalPrice = document.querySelector('.order__total-price-value');
@@ -400,10 +518,12 @@ class ExcursionsAPI {
     
     nameInput.value = '';
     emailInput.value = '';
-    summaryPanel.innerText = ''; //NIE DZIAŁA
+    console.log(summaryPanel);
+    // summaryPanel.children.remove(); // wyszukać dzieci
+    // summaryPanel.innerHTML = ''; //NIE DZIAŁA
     //create there readOrders() and getOrders()
     // await this.readOrders();
-    // await this.clearSummary();
+    // await this.clearSummary(); // czyści summary, czyści orders nawet jak jest zakomittowana
     await this.getOrders();
     totalPrice.innerHTML="0 PLN"
     
@@ -411,41 +531,41 @@ class ExcursionsAPI {
     }.bind(this)); // Binding 'this' context to access class methods
     };
 
-    //WALIDACJA FORMULARZY 'INPUT'
-    async inputFormValidation() {
-    // console.log('działa');
-    const inputForm = document.querySelector('.excursions__form');
+    // //WALIDACJA FORMULARZY 'INPUT'
+    // async inputFormValidation() {
+    // // console.log('działa');
+    // const inputForm = document.querySelector('.excursions__form');
     
-    inputForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
+    // inputForm.addEventListener('submit', async function(event) {
+    // event.preventDefault();
     
-    const inputChildrenNumber = document.querySelector('input[name="children"]');
-    const inputAdultsNumber = document.querySelector('input[name="adults"]');
-    const adults = inputAdultsNumber.value.trim();
-    const children = inputChildrenNumber.value.trim();
-    const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
-    console.log(adults, children);
+    // const inputChildrenNumber = document.querySelector('input[name="children"]');
+    // const inputAdultsNumber = document.querySelector('input[name="adults"]');
+    // const adults = inputAdultsNumber.value.trim();
+    // const children = inputChildrenNumber.value.trim();
+    // const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
+    // console.log(adults, children);
 
-    if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
-    const errorElement = document.createElement('p');
-    errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
-    orderForm.appendChild(errorElement);
+    // if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
+    // const errorElement = document.createElement('p');
+    // errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+    // orderForm.appendChild(errorElement);
     
-    } else {
-    // let totalPrice = document.querySelector('.order__total-price-value');
-    // const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
-    // alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
+    // } else {
+    // // let totalPrice = document.querySelector('.order__total-price-value');
+    // // const formattedTotalPrice = totalPrice.innerText.replace('PLN', '');
+    // // alert(`Dziękujemy za złożenie zamówienia o wartości ${formattedTotalPrice} PLN. Szczegóły zamówienia zostały wysłane na adres e-mail: ${email}.`);
     
-    // nameInput.value = '';
-    // emailInput.value = '';
-    // //create there readOrders() and getOrders()
-    // await this.readOrders();
-    // await this.getOrders();
-    // totalPrice.innerHTML="0PLN"
+    // // nameInput.value = '';
+    // // emailInput.value = '';
+    // // //create there readOrders() and getOrders()
+    // // await this.readOrders();
+    // // await this.getOrders();
+    // // totalPrice.innerHTML="0PLN"
     
-    }
-    }.bind(this)); // Binding 'this' context to access class methods
-    };
+    // }
+    // }.bind(this)); // Binding 'this' context to access class methods
+    // };
     
     Init(){
 
