@@ -4,13 +4,11 @@
 // import inputFormValidation from "./inputFormValidation";
 // import openEditPanel from "./openEditPanel";
 
-
+//DO ZROBIENIA:
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client - waliduje tylko field1, do ustawienia dla wszystkich `field${id}`
-
-//DODATKOWO
-// 1. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
-// 2. inny plik/inne pliki na wszystkie funkcje
+// 2. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
+//    inny plik/inne pliki na wszystkie funkcje
 class ExcursionsAPI {
     async getExcursionClient(){
         try {
