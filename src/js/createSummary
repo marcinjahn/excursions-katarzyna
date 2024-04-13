@@ -1,0 +1,38 @@
+const createSummary = () => {
+    const li = document.createElement('li');
+                li.className = 'summary__item ';
+    
+                const h3 = document.createElement('h3');
+                h3.className = 'summary__title';
+    
+                const spanName = document.createElement('span');
+                spanName.className = 'summary__name';
+                spanName.textContent = element.Title;
+    
+                const strongTotalPrice = document.createElement('strong');
+                strongTotalPrice.className = 'summary__total-price';
+                strongTotalPrice.textContent = element.Adult_cost * element.Adult_number + element.Child_cost * element.Child_number;
+                 totalCostNumber += element.Adult_cost * element.Adult_number + element.Child_cost * element.Child_number
+                const removeLink = document.createElement('a');
+                removeLink.onclick=()=>this.deleteOrder(element.id);
+                removeLink.className = 'summary__btn-remove';
+                removeLink.title = 'usuń';
+                removeLink.textContent = '   X';
+    
+                const pPrices = document.createElement('p');
+                pPrices.className = 'summary__prices';
+                pPrices.textContent = `dorośli: ${element.Adult_number} x ${element.Adult_cost}PLN, dzieci: ${element.Child_number} x ${element.Child_cost}PLN`;
+    
+                h3.appendChild(spanName);
+                h3.appendChild(strongTotalPrice);
+                h3.appendChild(removeLink);
+    
+                li.appendChild(h3);
+                li.appendChild(pPrices);
+    
+                document.querySelector('.panel__summary').appendChild(li);
+             document.querySelector('.order__total-price-value').innerHTML= `${totalCostNumber}PLN`
+
+}
+
+export default createSummary;

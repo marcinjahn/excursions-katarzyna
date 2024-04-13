@@ -1,73 +1,12 @@
-// function createExcursion(element) {
-//     console.log('działa');
-//     const li = document.createElement('li');
-//                 li.className = 'excursions__item  ';
+// import createExcursion from "./createExcursion";
+// import createExcursionAdmin from "./createExcursionAdmin";
+// import createSummary from "./createSummary";
+// import inputFormValidation from "./inputFormValidation";
+// import openEditPanel from "./openEditPanel";
 
-//                 const header = document.createElement('header');
-//                 const title = document.createElement('h2');
-//                 title.className = 'excursions__title';
-//                 title.textContent = element.Title;
-//                 const description = document.createElement('p');
-//                 description.className = 'excursions__description';
-//                 description.textContent = element.Description;
-//                 header.appendChild(title);
-//                 header.appendChild(description);
-
-//                 const form = document.createElement('form');
-//                 form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
-//                 form.addEventListener("submit",(e)=>{this.addToOrder(e, element.id)})
-
-//                 const adultField = document.createElement('div');
-//                 adultField.className = 'excursions__field';
-//                 adultField.innerHTML = `
-//                     <label class="excursions__field-name">
-//                         Dorosły: <b>${element.Adult_cost}</b>PLN x <input class="excursions__field-input" name="adults" />
-//                     </label>
-//                 `;
-
-//                 const childField = document.createElement('div');
-//                 childField.className = 'excursions__field';
-//                 childField.innerHTML = `
-//                     <label class="excursions__field-name">
-//                         Dziecko: <b>${element.Child_cost}</b>PLN x <input class="excursions__field-input" name="children" />
-//                     </label>
-//                 `;
-
-//                 const submitField = document.createElement('div');
-//                 submitField.className = `excursions__field excursions__field--submit`;
-
-//                 const submitInput = document.createElement('input');
-//                 submitInput.className = 'excursions__field-input excursions__field-input--submit';
-//                 submitInput.value = 'dodaj do zamówienia';
-//                 submitInput.type = 'submit';
-//                 submitInput.addEventListener('click', (e) => this.addToOrder(
-//                     e,
-//                     element.id,
-//                     element.Title,
-//                     element.Description,
-//                     element.Adult_cost,
-//                     element.Child_cost));
-
-//                 //walidacja inputów
-//                 // if(this.inputFormValidation()) {
-
-//                 // };
-
-//                 submitField.appendChild(submitInput)
-
-//                 form.appendChild(adultField);
-//                 form.appendChild(childField);
-//                 form.appendChild(submitField);
-
-//                 li.appendChild(header);
-//                 li.appendChild(form);
-
-//                 document.querySelector('.excursions').appendChild(li);
-// }
 
 // CLIENT
 // 1. BŁĄD */ walidacja formularzy Client - waliduje tylko field1, do ustawienia dla wszystkich `field${id}`
-// 2. BŁĄD nie czyści html w summary__panel linia 398
 
 //DODATKOWO
 // 1. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
@@ -79,7 +18,7 @@ class ExcursionsAPI {
             const data = await response.json();
             data.forEach(element => {
 
-                // createExcursion(element);
+                // createExcursion(element); // NIE WYKONUJE SIĘ addToOrder
                 // tutaj wstawiam funkcję zapisaną w osobnym pliku (wszystko ponizej to w osobnej funkcji)
                 const li = document.createElement('li');
                 li.className = 'excursions__item  ';
@@ -89,11 +28,12 @@ class ExcursionsAPI {
                 title.className = 'excursions__title';
                 title.textContent = element.Title;
                 const description = document.createElement('p');
-                description.className = 'excursions__description';
+                description.className ='excursions__description';
                 description.textContent = element.Description;
                 header.appendChild(title);
                 header.appendChild(description);
 
+                //TWORZYMY INPUT'Y I OPISY W WYCIECZKACH
                 const form = document.createElement('form');
                 form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
                 form.addEventListener("submit",(e)=>{this.addToOrder(e, element.id)})
@@ -117,6 +57,7 @@ class ExcursionsAPI {
                 const submitField = document.createElement('div');
                 submitField.className = `excursions__field excursions__field--submit`;
 
+                //DODAJEMY WYCIECZKĘ DO ZAMÓWIENIA
                 const submitInput = document.createElement('input');
                 submitInput.className = 'excursions__field-input excursions__field-input--submit';
                 submitInput.value = 'dodaj do zamówienia';
@@ -155,6 +96,9 @@ class ExcursionsAPI {
             const response = await fetch('http://localhost:3000/excursions');
             const data = await response.json();
             data.forEach(element => {
+
+                // createExcursionAdmin(element);
+
                 const li = document.createElement('li');
                 li.className = 'excursions__item';
 
@@ -194,7 +138,7 @@ class ExcursionsAPI {
                 editButton.className = 'excursions__field-input excursions__field-input--edit';
                 editButton.value = 'edytuj';
                 editButton.type = 'button';
-                editButton.addEventListener('click', (e) => this.OpenEditPanel(e, element.id));
+                editButton.addEventListener('click', (e) => this.openEditPanel(e, element.id));
     
                 submitField.appendChild(editButton);
     
@@ -226,6 +170,8 @@ class ExcursionsAPI {
             const data = await response.json();
             let totalCostNumber=0
             data.forEach(element => {
+
+            // createSummary(element);
                 const li = document.createElement('li');
                 li.className = 'summary__item ';
     
@@ -270,7 +216,7 @@ class ExcursionsAPI {
         e.preventDefault();
         console.log('działa');
 
-
+        // inputFormValidation();
         function inputFormValidation() {
             console.log('działa validate.js');
             const inputForm = document.querySelector('.field1');
@@ -380,19 +326,20 @@ class ExcursionsAPI {
             console.error('Error deleting excursion:', error);
         }
     }
-        OpenEditPanel(e,id){
+
+    // openEditPanel(e, id);
+
+        openEditPanel(e, id) {
         e.preventDefault();
         const panel = document.querySelector(".panel"); 
         panel.classList.add("disabledPanel")
 
         const edit_panel = document.querySelector(".edit_panel")
         edit_panel.style.display="block";
-        edit_panel.setAttribute("id", id);  
-
-        
+        edit_panel.setAttribute("id", id);   
     }
 
-    async editExcursion(e){
+    async editExcursion(e) {
         e.preventDefault();
         const edit_panel=document.querySelector(".edit_panel");
         let id = edit_panel.id
@@ -407,6 +354,7 @@ class ExcursionsAPI {
             "Adult_cost": content[0][2].value,
             "Child_cost":content[0][3].value 
         }
+
         try {
             const response = await fetch(`http://localhost:3000/excursions/${id}`, {
                 method: "Put",
@@ -494,8 +442,9 @@ class ExcursionsAPI {
     async orderFormSubmit() {
     // console.log('działa ten!');
     const orderForm = document.querySelector('.panel__order');
+    console.log(orderForm);
     
-    orderForm.addEventListener('submit',async function(event) {
+    orderForm.addEventListener('submit', async function(event) {
     event.preventDefault();
     
     const nameInput = document.querySelector('input[name="name"]');
@@ -504,7 +453,8 @@ class ExcursionsAPI {
     const email = emailInput.value.trim();
 
     const summaryPanel = document.querySelector('.panel__summary');
-    console.log(summaryPanel.innerText);
+    const summaryItem = document.querySelector('.summary__item');
+    // console.log(summaryPanel.innerText);
     
     if (name === '' || email === '' || !email.includes('@')) {
     const errorElement = document.createElement('p');
@@ -518,8 +468,17 @@ class ExcursionsAPI {
     
     nameInput.value = '';
     emailInput.value = '';
-    console.log(summaryPanel);
-    // summaryPanel.children.remove(); // wyszukać dzieci
+    summaryPanel.remove();
+    // console.log(summaryPanel);
+    // while(summaryItem.firstChild) {
+    //     summaryItem.removeChild(summaryItem.firstChild);
+    // }; 
+    // summaryItem.removeChild(summaryItem.firstChild);
+    //usuwam wszystkie dzieci
+    // while(summaryPanel.firstChild) {
+    //     summaryPanel.removeChild(summaryPanel.firstChild);
+    // }; 
+
     // summaryPanel.innerHTML = ''; //NIE DZIAŁA
     //create there readOrders() and getOrders()
     // await this.readOrders();
@@ -575,4 +534,5 @@ class ExcursionsAPI {
     }
 }
 export default ExcursionsAPI;
+
 
