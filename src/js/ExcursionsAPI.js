@@ -6,7 +6,7 @@
 
 //DO ZROBIENIA:
 // CLIENT
-// 1. BŁĄD */ walidacja formularzy Client - waliduje tylko field1, do ustawienia dla wszystkich `field${id}`
+// 1. BŁĄD */ walidacja formularzy Client - waliduje tylko field1, do ustawienia dla wszystkich `field${id}` #218
 // 2. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
 //    inny plik/inne pliki na wszystkie funkcje
 class ExcursionsAPI {
@@ -215,6 +215,7 @@ class ExcursionsAPI {
         console.log('działa');
 
         // inputFormValidation();
+        // WALIDACJA INPUTÓW
         function inputFormValidation() {
             console.log('działa validate.js');
             const inputForm = document.querySelector('.field1');
@@ -414,7 +415,7 @@ class ExcursionsAPI {
     }
     
     calculateTotalPrice() {
-        console.log('działa')
+        // console.log('działa')
         const totalElement = document.querySelector('.order__total-price-value');
         totalElement.innerText = totalSum + 'PLN';
     }
