@@ -11,88 +11,55 @@
 import inputFormValidation from "./validateInput";
 
 
-class ExcursionsAPI {
-    async getExcursionClient(){
-        try {
-            const response = await fetch('http://localhost:3000/excursions');
-            const data = await response.json();
-            data.forEach(element => {
-
-            // createExcursions(element);
-            const li = document.createElement('li');
-            li.className = 'excursions__item  ';
+export class ExcursionsAPI {
+    async getExcursions() {
+        const response = await fetch('http://localhost:3000/excursions');
         
-            const header = document.createElement('header');
-            const title = document.createElement('h2');
-            title.className = 'excursions__title';
-            title.textContent = element.Title;
-            
-            const description = document.createElement('p');
-            description.className ='excursions__description';
-            description.textContent = element.Description;
-            
-            header.appendChild(title);
-            header.appendChild(description);
-        
-            //LEWA STRONA => TWORZYMY INPUT'Y I OPISY W WYCIECZKACH
-            const form = document.createElement('form');
-            form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
-            console.log(element.id);
-            // form.addEventListener("submit", (e) => {
-            //     this.addToOrder(e, element.id)
-            // })
-        
-            const adultField = document.createElement('div');
-            adultField.className = 'excursions__field';
-            adultField.innerHTML = `
-                <label class="excursions__field-name">
-                    Dorosły: <b>${element.Adult_cost}</b>PLN x <input class="excursions__field-input" name="adults" />
-                </label>
-            `;
-        
-            const childField = document.createElement('div');
-            childField.className = 'excursions__field';
-            childField.innerHTML = `
-                <label class="excursions__field-name">
-                    Dziecko: <b>${element.Child_cost}</b>PLN x <input class="excursions__field-input" name="children" />
-                </label>
-            `;
-        
-            const submitField = document.createElement('div');
-            // console.log(submitField);
-            submitField.className = `excursions__field excursions__field--submit`;
-        
-            //LEWA STRONA => DODAJEMY WYCIECZKĘ DO ZAMÓWIENIA
-            const submitInput = document.createElement('input');
-            submitInput.className = 'excursions__field-input excursions__field-input--submit';
-            submitInput.value = 'dodaj do zamówienia';
-            submitInput.type = 'submit';
-            submitInput.addEventListener('click', (e) => this.addToOrder
-                (
-                e,
-                element.id,
-                element.Title,
-                element.Description,
-                element.Adult_cost,
-                element.Child_cost
-                ));
-        
-            submitField.appendChild(submitInput)
-        
-            form.appendChild(adultField);
-            form.appendChild(childField);
-            form.appendChild(submitField);
-        
-            li.appendChild(header);
-            li.appendChild(form);
-        
-            document.querySelector('.excursions').appendChild(li);
-
-            });
-        } catch (error) {
-            console.error('Error fetching excursions:', error);
-        }
+        return await response.json();
     }
+
+    async addExcursion(excursion) {
+        const response = await fetch("http://localhost:3000/excursions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(excursion),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to add new excursion");
+        }
+
+        return await response.json();
+    }
+
+    async editExcursion(id, excursion) {
+        const response = await fetch(`http://localhost:3000/excursions/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(excursion),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to edit excursion");
+        }
+
+        return await response.json();
+    }
+
+    async deleteExcursion(id) {
+        await fetch(`http://localhost:3000/excursions/${id}`, {
+            method: 'DELETE'
+        });
+    }
+
+
+
+
+
 
     async getExcursionAdmin(){
         try {
@@ -504,5 +471,6 @@ class ExcursionsAPI {
     }
 }
 export default ExcursionsAPI;
+
 
 
