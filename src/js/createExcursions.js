@@ -1,6 +1,5 @@
-// NIE DZIAŁA addToOrder
-
-const createExcursion = (element) => {
+const createExcursions = (element) => {
+    //LEWA STRONA => TWORZYMY WYCIECZKI - TYTUŁ, OPIS
     const li = document.createElement('li');
     li.className = 'excursions__item  ';
 
@@ -8,21 +7,21 @@ const createExcursion = (element) => {
     const title = document.createElement('h2');
     title.className = 'excursions__title';
     title.textContent = element.Title;
+    
     const description = document.createElement('p');
     description.className ='excursions__description';
     description.textContent = element.Description;
+    
     header.appendChild(title);
     header.appendChild(description);
 
+    //LEWA STRONA => TWORZYMY INPUT'Y I OPISY W WYCIECZKACH
     const form = document.createElement('form');
-
     form.className = `excursions__form field${element.id}`; //DODANIE KLASY field1
-    console.log(form.className);
-    form.addEventListener("submit", (e) => {this.addToOrder
-        (
-        e, 
-        element.id
-        )});
+    console.log(element.id);
+    // form.addEventListener("submit", (e) => {
+    //     this.addToOrder(e, element.id)
+    // })
 
     const adultField = document.createElement('div');
     adultField.className = 'excursions__field';
@@ -41,24 +40,23 @@ const createExcursion = (element) => {
     `;
 
     const submitField = document.createElement('div');
+    // console.log(submitField);
     submitField.className = `excursions__field excursions__field--submit`;
 
+    //LEWA STRONA => DODAJEMY WYCIECZKĘ DO ZAMÓWIENIA
     const submitInput = document.createElement('input');
     submitInput.className = 'excursions__field-input excursions__field-input--submit';
     submitInput.value = 'dodaj do zamówienia';
     submitInput.type = 'submit';
-    submitInput.addEventListener('click', (e) => this.addToOrder(
+    submitInput.addEventListener('click', (e) => this.addToOrder
+        (
         e,
         element.id,
         element.Title,
         element.Description,
         element.Adult_cost,
-        element.Child_cost));
-
-    //walidacja inputów
-    // if(this.inputFormValidation()) {
-
-    // };
+        element.Child_cost
+        ));
 
     submitField.appendChild(submitInput)
 
@@ -72,4 +70,4 @@ const createExcursion = (element) => {
     document.querySelector('.excursions').appendChild(li);
 }
 
-export default createExcursion;
+export default createExcursions;
