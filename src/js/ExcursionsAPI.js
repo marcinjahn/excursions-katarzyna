@@ -1,15 +1,4 @@
-//DO ZROBIENIA:
-// CLIENT
-// 1. walidacja inputów (+ czyszczenie inputów po wysłaniu do koszyka)
-// BLĄD: wycieczki dodają się podwójnie
-// koszyk: przy walidacji dodać czyszczenie komunikatów, aby zawsze były tylko aktualne
-
-// 2. zamienić tak, aby komunikacja z api w ExcursionsAPI oraz utworzyć 
-//    inny plik/inne pliki na wszystkie funkcje
-
-// import createExcursions from "./createExcursions";
-import inputFormValidation from "./validateInput";
-
+// TO DO: walidacja DODAJ DO KOSZYKA + ZAMAWIAM (+ czyszczenie inputów po wysłaniu do koszyka + czyszczenie komunikatów)
 
 export class ExcursionsAPI {
     async getExcursions() {
