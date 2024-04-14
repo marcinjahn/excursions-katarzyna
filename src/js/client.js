@@ -5,10 +5,6 @@ import { OrdersApi } from './OrdersApi';
 buildExcursionsUi();
 refreshOrders();
 
-// api.getExcursionClient();
-// api.getOrders();
-// api.orderFormSubmit();
-
 async function buildExcursionsUi() {
     const excursionsApi = new ExcursionsAPI();
     const excursions = await excursionsApi.getExcursions();
@@ -54,12 +50,15 @@ async function buildExcursionsUi() {
         // console.log(submitField);
         submitContainer.className = `excursions__field excursions__field--submit`;
 
-        //LEWA STRONA => DODAJEMY WYCIECZKĘ DO ZAMÓWIENIA
+        //LEWA STRONA => DODAJEMY WYCIECZKĘ DO KOSZYKA
         const submitInput = document.createElement('input');
         submitInput.className = 'excursions__field-input excursions__field-input--submit';
-        submitInput.value = 'dodaj do zamówienia';
+        submitInput.value = 'dodaj do koszyka';
         submitInput.type = 'submit';
         submitInput.addEventListener('click', async (e) => {
+
+            validateForms(excursion.id);
+
             const ordersApi = new OrdersApi();
             
             await ordersApi.createOrder({
@@ -144,4 +143,53 @@ async function refreshOrders() {
 async function deleteOrder(id) {
     const ordersApi = new OrdersApi();
     await ordersApi.deleteOrder(id);
+}
+
+async function validateForms(id = 1) {
+    console.log('działa validate.js');
+    // const inputForm = document.querySelector('.field1');
+    
+    //USTAWIENIE DLA WSZYSTKICH INPUTÓW
+    let inputForm = document.querySelectorAll(`.field${id}`)
+    
+    const inputChildrenNumber = inputForm.querySelector('input[name="children"]');
+    const inputAdultsNumber = inputForm.querySelector('input[name="adults"]');
+
+    //ustawiam wartości domyślne inputów na 0
+    inputAdultsNumber.defaultValue = '0';
+    inputChildrenNumber.defaultValue = '0';
+
+    const adults = inputAdultsNumber.value.trim();
+    const children = inputChildrenNumber.value.trim();
+    const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
+    console.log(adults, children);
+
+    if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
+        const errorElement = document.createElement('p');
+        errorElement.style.color = 'red';
+        errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
+    
+        inputForm.appendChild(errorElement);
+        return false;
+
+    } else {
+        return true;
+    }
+};
+
+const cleanForm = async (idForm = 1) => {
+    console.log('działa cleanForm');
+    let inputForm = document.querySelector(`.field${idForm}`)
+
+    let inputChildrenNumber = inputForm.querySelector('input[name="children"]');
+    let inputAdultsNumber = inputForm.querySelector('input[name="adults"]');
+    let errorElement = inputForm.querySelector('.error');
+
+    inputChildrenNumber.value = '';
+    inputAdultsNumber.value = '';
+
+    
+    if(errorElement) {
+        errorElement.remove();
+    }
 }

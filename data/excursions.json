@@ -29,5 +29,18 @@
       "Child_cost": 1000
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "id": "2024-04-14T18:31:29.699Z",
+      "excursion": {
+        "id": "1",
+        "Title": "Weekend nad morzem",
+        "Description": "Szum fal, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
+        "Adult_cost": 1800,
+        "Child_cost": 1200
+      },
+      "Adult_Number": 2,
+      "Child_Number": 1
+    }
+  ]
 }
