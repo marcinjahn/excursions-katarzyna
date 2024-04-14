@@ -2,10 +2,12 @@ import './../css/admin.css';
 import { ExcursionsAPI } from './ExcursionsAPI';
 
 const api = new ExcursionsAPI();
+builtExcursionsAdminUi();
+
 // api.getExcursionAdmin();
 // api.Init()
 
-builtExcursionsAdminUi();
+
 async function builtExcursionsAdminUi() {
     const excursionsApi = new ExcursionsAPI();
     const excursions = await excursionsApi.createExcursionAdminPanel();
