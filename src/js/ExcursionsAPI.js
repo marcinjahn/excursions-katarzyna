@@ -58,10 +58,6 @@ export class ExcursionsAPI {
       }
     );
     const excursion = await response.json();
-    // console.log('Excursion deleted:', excursion);
-
-    document.querySelector(".excursions").innerHTML = "";
-    excursion.createExcursionAdminPanel();
   }
 
   
@@ -261,35 +257,35 @@ export class ExcursionsAPI {
     }
   }
 
-  async deleteExcursion(excursionId) {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/excursions/${excursionId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const data = await response.json();
-      console.log("Excursion deleted:", data);
+//   async deleteExcursion(excursionId) {
+//     try {
+//       const response = await fetch(
+//         `http://localhost:3000/excursions/${excursionId}`,
+//         {
+//           method: "DELETE",
+//         }
+//       );
+//       const data = await response.json();
+//       console.log("Excursion deleted:", data);
 
-      document.querySelector(".excursions").innerHTML = "";
-      this.getExcursionAdmin();
-    } catch (error) {
-      console.error("Error deleting excursion:", error);
-    }
-  }
+//       document.querySelector(".excursions").innerHTML = "";
+//       this.getExcursionAdmin();
+//     } catch (error) {
+//       console.error("Error deleting excursion:", error);
+//     }
+//   }
 
   // openEditPanel(e, id);
 
-  openEditPanel(e, id) {
-    e.preventDefault();
-    const panel = document.querySelector(".panel");
-    panel.classList.add("disabledPanel");
+//   openEditPanel(e, id) {
+//     e.preventDefault();
+//     const panel = document.querySelector(".panel");
+//     panel.classList.add("disabledPanel");
 
-    const edit_panel = document.querySelector(".edit_panel");
-    edit_panel.style.display = "block";
-    edit_panel.setAttribute("id", id);
-  }
+//     const edit_panel = document.querySelector(".edit_panel");
+//     edit_panel.style.display = "block";
+//     edit_panel.setAttribute("id", id);
+//   }
 
 //   async editExcursion(e) {
 //     e.preventDefault();

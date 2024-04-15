@@ -75,7 +75,7 @@ async function builtExcursionsAdminUi() {
           "excursions__field-input excursions__field-input--remove";
         deleteButton.value = "usuń";
         deleteButton.type = "button";
-        deleteButton.onclick = () => deleteExcursion(excursion.id);
+        deleteButton.onclick = () => deleteExcursionAdmin(excursion.id);
 
         submitField.appendChild(deleteButton);
 
@@ -91,15 +91,15 @@ async function builtExcursionsAdminUi() {
 
 }
 
-async function deleteExcursion() {
+async function deleteExcursionAdmin(id) {
     const excursionsApi = new ExcursionsAPI();
-    const response = await excursionsApi.deleteExcursionAdminPanel();
+    const response = await excursionsApi.deleteExcursionAdminPanel(id);
 
-    const excursions = await response.json();
+    const excursions = await response;
     console.log("Excursion deleted:", excursions);
 
     document.querySelector(".excursions").innerHTML = "";
-    this.builtExcursionsAdminUi();
+    builtExcursionsAdminUi();
 } 
 
 
@@ -160,3 +160,5 @@ async function editExcursionAdmin(e) {
         document.querySelector(".excursions").innerHTML = "";
         builtExcursionsAdminUi();
     }
+
+    
