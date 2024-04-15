@@ -122,7 +122,7 @@ async function editExcursionAdmin(e) {
     let content = document.querySelectorAll(`.edit`);
     console.log(content);
 
-    const formData = {
+    const excursion = {
         Title: content[0][0].value,
         Description: content[0][1].value,
         Adult_cost: content[0][2].value,
@@ -130,7 +130,7 @@ async function editExcursionAdmin(e) {
     };
 
     const excursionsApi = new ExcursionsAPI();  
-    const response = await excursionsApi.editExcursion(id);
+    const response = await excursionsApi.editExcursion(id, excursion);
     const newExcursion = response.json();
     console.log("excursion edited:", newExcursion);
 
