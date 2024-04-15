@@ -9,7 +9,7 @@ Init()
 
 function Init() {
     document.querySelector("form").addEventListener("submit", (e) => {
-      this.addNewExcursion(e);
+      addNewExcursionAdmin(e);
     });
     //FORMULARZ EDYCJI (który się otwiera)
     document.querySelector(".edit").addEventListener("submit", (e) => {
@@ -102,7 +102,7 @@ async function deleteExcursion() {
     this.builtExcursionsAdminUi();
 } 
 
-//DZIAŁA
+
 function openEditPanel(e, id) {
     e.preventDefault();
     const panel = document.querySelector(".panel");
@@ -131,7 +131,7 @@ async function editExcursionAdmin(e) {
 
     const excursionsApi = new ExcursionsAPI();  
     const response = await excursionsApi.editExcursion(id, excursion);
-    const newExcursion = response.json();
+    const newExcursion = await response;
     console.log("excursion edited:", newExcursion);
 
     document.querySelector(".excursions").innerHTML = "";
@@ -140,4 +140,23 @@ async function editExcursionAdmin(e) {
     const panel = document.querySelector(".panel");
     panel.classList.remove("disabledPanel");
     document.querySelector(".edit_panel").style.display = "none";
+    }
+
+    async function addNewExcursionAdmin(e) {
+        e.preventDefault();
+        let content = document.querySelectorAll(".form__field");
+        console.log(content);
+        const excursion = {
+          Title: content[0].value,
+          Description: content[1].value,
+          Adult_cost: content[2].value,
+          Child_cost: content[3].value,
+        };
+    
+        const excursionsApi = new ExcursionsAPI();  
+        const response = await excursionsApi.addExcursion(excursion);
+        const newExcursion = await response;
+        console.log("excursion edited:", newExcursion);
+        document.querySelector(".excursions").innerHTML = "";
+        builtExcursionsAdminUi();
     }

@@ -332,39 +332,39 @@ export class ExcursionsAPI {
 //     document.querySelector(".edit_panel").style.display = "none";
 //   }
 
-  async addNewExcursion(e) {
-    e.preventDefault();
-    let content = document.querySelectorAll(".form__field");
-    console.log(content);
-    const formData = {
-      Title: content[0].value,
-      Description: content[1].value,
-      Adult_cost: content[2].value,
-      Child_cost: content[3].value,
-    };
+//   async addNewExcursion(e) {
+//     e.preventDefault();
+//     let content = document.querySelectorAll(".form__field");
+//     console.log(content);
+//     const formData = {
+//       Title: content[0].value,
+//       Description: content[1].value,
+//       Adult_cost: content[2].value,
+//       Child_cost: content[3].value,
+//     };
 
-    console.log(formData);
-    try {
-      const response = await fetch("http://localhost:3000/excursions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+//     console.log(formData);
+//     try {
+//       const response = await fetch("http://localhost:3000/excursions", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(formData),
+//       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add new excursion");
-      }
+//       if (!response.ok) {
+//         throw new Error("Failed to add new excursion");
+//       }
 
-      const newExcursion = await response.json();
-      console.log("New excursion added:", newExcursion);
-      document.querySelector(".excursions").innerHTML = "";
-      this.getExcursionAdmin();
-    } catch (error) {
-      console.error("Error adding new excursion:", error);
-    }
-  }
+//       const newExcursion = await response.json();
+//       console.log("New excursion added:", newExcursion);
+//       document.querySelector(".excursions").innerHTML = "";
+//       this.getExcursionAdmin();
+//     } catch (error) {
+//       console.error("Error adding new excursion:", error);
+//     }
+//   }
 
   calculateTotalPrice() {
     // console.log('działa')

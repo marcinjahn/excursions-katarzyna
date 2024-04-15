@@ -1,10 +1,10 @@
 {
   "excursions": [
     {
-      "Title": "Weekend nad morzem",
-      "Description": "Szum fal, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
-      "Adult_cost": "1800",
-      "Child_cost": "1200",
+      "Title": "Weekend w górach",
+      "Description": "Wspaniałe szlaki, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
+      "Adult_cost": "2000",
+      "Child_cost": "1500",
       "id": "1"
     },
     {
@@ -27,6 +27,20 @@
       "Description": "Zapomnij o stresie i troskach codzienności. Odpocznij na rajskich plażach, kąp się w krystalicznie czystej wodzie i delektuj się spokojem otaczającej natury.",
       "Adult_cost": 1600,
       "Child_cost": 1000
+    },
+    {
+      "Title": "Weekend nad morzem",
+      "Description": "Szum fal, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
+      "Adult_cost": "1800",
+      "Child_cost": "1200",
+      "id": "k1cVUE7"
+    },
+    {
+      "Title": "Weekend nad morzem",
+      "Description": "Szum fal, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
+      "Adult_cost": "1800",
+      "Child_cost": "1200",
+      "id": "AAcRDFs"
     }
   ],
   "orders": [
