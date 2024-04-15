@@ -1,10 +1,4 @@
 export class OrdersApi {
-    async getOrders() {
-        const response = await fetch('http://localhost:3000/orders');
-
-        return await response.json();
-    }
-
     async createOrder(order) {
         console.log(order);
         const response = await fetch("http://localhost:3000/orders", {
@@ -20,11 +14,5 @@ export class OrdersApi {
         }
 
         return await response.json();
-    }
-
-    async deleteOrder(id) {
-        const response = await fetch(`http://localhost:3000/orders/${id}`, {
-            method: 'DELETE'
-        });
     }
 }

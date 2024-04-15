@@ -1,9 +1,11 @@
 import './../css/client.css';
 import { ExcursionsAPI } from './ExcursionsAPI';
-import { OrdersApi } from './OrdersApi';
+import { isTravelersCountValid, isCustomerDataValid } from './validation';
+import { addToBasket, orderBasketItems } from './basket';
+import { displayError } from './errors';
 
 buildExcursionsUi();
-refreshOrders();
+attachOrderHandler();
 
 async function buildExcursionsUi() {
     const excursionsApi = new ExcursionsAPI();
@@ -18,11 +20,11 @@ async function buildExcursionsUi() {
         const title = document.createElement('h2');
         title.className = 'excursions__title';
         title.textContent = excursion.Title;
-        
+
         const description = document.createElement('p');
-        description.className ='excursions__description';
+        description.className = 'excursions__description';
         description.textContent = excursion.Description;
-        
+
         header.appendChild(title);
         header.appendChild(description);
 
@@ -34,7 +36,7 @@ async function buildExcursionsUi() {
         adultContainer.className = 'excursions__field';
         adultContainer.innerHTML = `
             <label class="excursions__field-name">
-                Dorosły: <b>${excursion.Adult_cost}</b>PLN x <input class="excursions__field-input" name="adults" />
+                Dorosły: <b>${excursion.Adult_cost}</b>PLN x <input value="0" class="excursions__field-input" name="adults" />
             </label>
         `;
 
@@ -42,12 +44,12 @@ async function buildExcursionsUi() {
         childContainer.className = 'excursions__field';
         childContainer.innerHTML = `
             <label class="excursions__field-name">
-                Dziecko: <b>${excursion.Child_cost}</b>PLN x <input class="excursions__field-input" name="children" />
+                Dziecko: <b>${excursion.Child_cost}</b>PLN x <input value="0" class="excursions__field-input" name="children" />
             </label>
         `;
 
         const submitContainer = document.createElement('div');
-        // console.log(submitField);
+
         submitContainer.className = `excursions__field excursions__field--submit`;
 
         //LEWA STRONA => DODAJEMY WYCIECZKĘ DO KOSZYKA
@@ -55,20 +57,9 @@ async function buildExcursionsUi() {
         submitInput.className = 'excursions__field-input excursions__field-input--submit';
         submitInput.value = 'dodaj do koszyka';
         submitInput.type = 'submit';
-        submitInput.addEventListener('click', async (e) => {
-
-            validateForms(excursion.id);
-
-            const ordersApi = new OrdersApi();
-            
-            await ordersApi.createOrder({
-                id: new Date().toISOString(), // tworzę "randomowe", unikalne ID
-                excursion,
-                Adult_Number: 2, // TODO: Implement
-                Child_Number: 1  // TODO: Implement
-            });
-
-            refreshOrders();
+        submitInput.addEventListener('click', async (event) => {
+            event.preventDefault();
+            await handleAddToBasket(excursion, event);
         });
 
         submitContainer.appendChild(submitInput)
@@ -84,112 +75,62 @@ async function buildExcursionsUi() {
     });
 }
 
-async function refreshOrders() {
-    const existingOrders = document.querySelectorAll('summary__item');
-    existingOrders.forEach(order => order.remove());
+async function handleAddToBasket(excursion, e) {
+    const form = e.target.parentElement.parentElement;
+    const adultsInput = form.childNodes[0].childNodes[1].childNodes[3];
+    const childrenInput = form.childNodes[1].childNodes[1].childNodes[3];
 
+    const isValid = isTravelersCountValid(adultsInput.value, childrenInput.value);
 
-    const ordersApi = new OrdersApi();
-    const orders = await ordersApi.getOrders();
+    if (isValid) {
+        const adults = parseInt(adultsInput.value);
+        const children = parseInt(childrenInput.value);
 
-    let totalCostNumber = 0;
+        // const ordersApi = new OrdersApi();
 
-    orders.forEach(order => {
-        const li = document.createElement('li');
-        li.className = 'summary__item';
+        // await ordersApi.createOrder({
+        //     id: new Date().toISOString(), // tworzę "randomowe", unikalne ID
+        //     excursion,
+        //     Adult_Number: adults,
+        //     Child_Number: children
+        // });
 
-        const h3 = document.createElement('h3');
-        h3.className = 'summary__title';
+        adultsInput.value = '0';
+        childrenInput.value = '0';
 
-        const spanName = document.createElement('span');
-        spanName.className = 'summary__name';
-        spanName.textContent = order.excursion.Title;
-
-        const strongTotalPrice = document.createElement('strong');
-        strongTotalPrice.className = 'summary__total-price';
-
-        const orderCost = order.excursion.Adult_cost * order.Adult_number + order.excursion.Child_cost * order.Child_number;
-
-        strongTotalPrice.textContent = orderCost;
-        totalCostNumber += orderCost;
-        const removeLink = document.createElement('a');
-  
-        removeLink.onclick = () => {
-            deleteOrder(order.id);
-            li.remove();
-        };
-
-        removeLink.className = 'summary__btn-remove';
-        removeLink.title = 'usuń';
-        removeLink.textContent = 'X';
-
-        const pPrices = document.createElement('p');
-        console.log(pPrices);
-        pPrices.className = 'summary__prices';
-        pPrices.textContent = `dorośli: ${order.Adult_number} x ${order.excursion.Adult_cost}PLN, dzieci: ${order.Child_number} x ${order.excursion.Child_cost}PLN`;
-
-        h3.appendChild(spanName);
-        h3.appendChild(strongTotalPrice);
-        h3.appendChild(removeLink);
-
-        li.appendChild(h3);
-        li.appendChild(pPrices);
-
-        document.querySelector('.panel__summary').appendChild(li);
-        document.querySelector('.order__total-price-value').innerHTML= `${totalCostNumber}PLN`
-    });
-}
-
-async function deleteOrder(id) {
-    const ordersApi = new OrdersApi();
-    await ordersApi.deleteOrder(id);
-}
-
-async function validateForms(id = 1) {
-    console.log('działa validate.js');
-    // const inputForm = document.querySelector('.field1');
-    
-    //USTAWIENIE DLA WSZYSTKICH INPUTÓW
-    let inputForm = document.querySelectorAll(`.field${id}`)
-    
-    const inputChildrenNumber = inputForm.querySelector('input[name="children"]');
-    const inputAdultsNumber = inputForm.querySelector('input[name="adults"]');
-
-    //ustawiam wartości domyślne inputów na 0
-    inputAdultsNumber.defaultValue = '0';
-    inputChildrenNumber.defaultValue = '0';
-
-    const adults = inputAdultsNumber.value.trim();
-    const children = inputChildrenNumber.value.trim();
-    const regex = /^\d+$/; // sprawdzamy czy input zawiera wyłącznie liczby
-    console.log(adults, children);
-
-    if (adults === '' || children === '' || !regex.test(adults) || !regex.test(children)) {
-        const errorElement = document.createElement('p');
-        errorElement.style.color = 'red';
-        errorElement.innerText = 'Proszę uzupełnić poprawnie wymagane pola';
-    
-        inputForm.appendChild(errorElement);
-        return false;
-
+        addToBasket({
+            excursion,
+            Adult_Number: adults,
+            Child_Number: children
+        });
     } else {
-        return true;
+        displayError(form, "Proszę uzupełnić poprawnie wymagane pola");
     }
-};
+}
 
-const cleanForm = async (idForm = 1) => {
-    console.log('działa cleanForm');
-    let inputForm = document.querySelector(`.field${idForm}`)
+async function attachOrderHandler() {
+    const orderForm = document.querySelector(".panel__order");
 
-    let inputChildrenNumber = inputForm.querySelector('input[name="children"]');
-    let inputAdultsNumber = inputForm.querySelector('input[name="adults"]');
-    let errorElement = inputForm.querySelector('.error');
+    orderForm.addEventListener(
+        "submit",
+        async (event) => {
+            event.preventDefault();
 
-    inputChildrenNumber.value = '';
-    inputAdultsNumber.value = '';
+            const nameInput = document.querySelector('input[name="name"]');
+            const emailInput = document.querySelector('input[name="email"]');
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
 
-    
-    if(errorElement) {
-        errorElement.remove();
-    }
+            if (!isCustomerDataValid(name, email)) {
+                displayError(orderForm, "Proszę uzupełnić poprawnie wymagane pola");
+
+                return;
+            }
+
+            await orderBasketItems(name, email, orderForm);
+
+            nameInput.value = "";
+            emailInput.value = "";
+        }
+    );
 }

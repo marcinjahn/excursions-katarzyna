@@ -45,21 +45,6 @@ export class ExcursionsAPI {
     });
   }
 
-  async createExcursionAdminPanel() {
-    const response = await fetch("http://localhost:3000/excursions");
-    return response.json();
-  }
-
-  async deleteExcursionAdminPanel(excursionId) {
-    const response = await fetch(
-      `http://localhost:3000/excursions/${excursionId}`,
-      {
-        method: "DELETE",
-      }
-    );
-    const excursion = await response.json();
-  }
-
   
 
 
