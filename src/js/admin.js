@@ -5,8 +5,17 @@ const api = new ExcursionsAPI();
 builtExcursionsAdminUi();
 
 // api.getExcursionAdmin();
-// api.Init()
+Init()
 
+function Init() {
+    document.querySelector("form").addEventListener("submit", (e) => {
+      this.addNewExcursion(e);
+    });
+    //FORMULARZ EDYCJI (który się otwiera)
+    document.querySelector(".edit").addEventListener("submit", (e) => {
+      editExcursionAdmin(e);
+    });
+  }
 
 async function builtExcursionsAdminUi() {
     const excursionsApi = new ExcursionsAPI();
@@ -56,7 +65,7 @@ async function builtExcursionsAdminUi() {
         editButton.value = "edytuj";
         editButton.type = "button";
         editButton.addEventListener("click", (e) =>
-          this.openEditPanel(e, excursion.id)
+          openEditPanel(e, excursion.id)
         );
 
         submitField.appendChild(editButton);
@@ -66,7 +75,7 @@ async function builtExcursionsAdminUi() {
           "excursions__field-input excursions__field-input--remove";
         deleteButton.value = "usuń";
         deleteButton.type = "button";
-        deleteButton.onclick = () => this.deleteExcursion(excursion.id);
+        deleteButton.onclick = () => deleteExcursion(excursion.id);
 
         submitField.appendChild(deleteButton);
 
@@ -81,3 +90,54 @@ async function builtExcursionsAdminUi() {
       });
 
 }
+
+async function deleteExcursion() {
+    const excursionsApi = new ExcursionsAPI();
+    const response = await excursionsApi.deleteExcursionAdminPanel();
+
+    const excursions = await response.json();
+    console.log("Excursion deleted:", excursions);
+
+    document.querySelector(".excursions").innerHTML = "";
+    this.builtExcursionsAdminUi();
+} 
+
+//DZIAŁA
+function openEditPanel(e, id) {
+    e.preventDefault();
+    const panel = document.querySelector(".panel");
+    panel.classList.add("disabledPanel");
+
+    const edit_panel = document.querySelector(".edit_panel");
+    edit_panel.style.display = "block";
+    edit_panel.setAttribute("id", id);
+}
+
+async function editExcursionAdmin(e) {
+    e.preventDefault();
+    const edit_panel = document.querySelector(".edit_panel");
+    let id = edit_panel.id;
+    console.log(id, edit_panel);
+
+    let content = document.querySelectorAll(`.edit`);
+    console.log(content);
+
+    const formData = {
+        Title: content[0][0].value,
+        Description: content[0][1].value,
+        Adult_cost: content[0][2].value,
+        Child_cost: content[0][3].value,
+    };
+
+    const excursionsApi = new ExcursionsAPI();  
+    const response = await excursionsApi.editExcursion(id);
+    const newExcursion = response.json();
+    console.log("excursion edited:", newExcursion);
+
+    document.querySelector(".excursions").innerHTML = "";
+    builtExcursionsAdminUi();
+
+    const panel = document.querySelector(".panel");
+    panel.classList.remove("disabledPanel");
+    document.querySelector(".edit_panel").style.display = "none";
+    }

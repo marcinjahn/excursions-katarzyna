@@ -1,11 +1,7 @@
 {
   "excursions": [
     {
-      "id": "1",
-      "Title": "Weekend nad morzem",
-      "Description": "Szum fal, piasek pod stopami i urocze zachody słońca na pewno skuszą wielu z Was. Zerknijcie zatem na najlepsze nadmorskie miejscówki z naszej oferty.",
-      "Adult_cost": 1800,
-      "Child_cost": 1200
+      "id": "1"
     },
     {
       "id": "2",

@@ -64,6 +64,11 @@ export class ExcursionsAPI {
     excursion.createExcursionAdminPanel();
   }
 
+  
+
+
+
+
   async getExcursionAdmin() {
     try {
       const response = await fetch("http://localhost:3000/excursions");
@@ -286,46 +291,46 @@ export class ExcursionsAPI {
     edit_panel.setAttribute("id", id);
   }
 
-  async editExcursion(e) {
-    e.preventDefault();
-    const edit_panel = document.querySelector(".edit_panel");
-    let id = edit_panel.id;
-    console.log(id, edit_panel);
+//   async editExcursion(e) {
+//     e.preventDefault();
+//     const edit_panel = document.querySelector(".edit_panel");
+//     let id = edit_panel.id;
+//     console.log(id, edit_panel);
 
-    let content = document.querySelectorAll(`.edit`);
-    console.log(content);
+//     let content = document.querySelectorAll(`.edit`);
+//     console.log(content);
 
-    const formData = {
-      Title: content[0][0].value,
-      Description: content[0][1].value,
-      Adult_cost: content[0][2].value,
-      Child_cost: content[0][3].value,
-    };
+//     const formData = {
+//       Title: content[0][0].value,
+//       Description: content[0][1].value,
+//       Adult_cost: content[0][2].value,
+//       Child_cost: content[0][3].value,
+//     };
 
-    try {
-      const response = await fetch(`http://localhost:3000/excursions/${id}`, {
-        method: "Put",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+//     try {
+//       const response = await fetch(`http://localhost:3000/excursions/${id}`, {
+//         method: "Put",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(formData),
+//       });
 
-      if (!response.ok) {
-        throw new Error("Failed to edit excursion");
-      }
+//       if (!response.ok) {
+//         throw new Error("Failed to edit excursion");
+//       }
 
-      const newExcursion = await response.json();
-      console.log("excursion edited:", newExcursion);
-      document.querySelector(".excursions").innerHTML = "";
-      this.getExcursionAdmin();
-    } catch (error) {
-      console.error("Error editing excursion:", error);
-    }
-    const panel = document.querySelector(".panel");
-    panel.classList.remove("disabledPanel");
-    document.querySelector(".edit_panel").style.display = "none";
-  }
+//       const newExcursion = await response.json();
+//       console.log("excursion edited:", newExcursion);
+//       document.querySelector(".excursions").innerHTML = "";
+//       this.getExcursionAdmin();
+//     } catch (error) {
+//       console.error("Error editing excursion:", error);
+//     }
+//     const panel = document.querySelector(".panel");
+//     panel.classList.remove("disabledPanel");
+//     document.querySelector(".edit_panel").style.display = "none";
+//   }
 
   async addNewExcursion(e) {
     e.preventDefault();
@@ -476,14 +481,15 @@ export class ExcursionsAPI {
   // }.bind(this)); // Binding 'this' context to access class methods
   // };
 
-  Init() {
-    document.querySelector("form").addEventListener("submit", (e) => {
-      this.addNewExcursion(e);
-    });
-    document.querySelector(".edit").addEventListener("submit", (e) => {
-      this.editExcursion(e);
-    });
-  }
+//   Init() {
+//     document.querySelector("form").addEventListener("submit", (e) => {
+//       this.addNewExcursion(e);
+//     });
+//     //FORMULARZ EDYCJI (który się otwiera)
+//     document.querySelector(".edit").addEventListener("submit", (e) => {
+//       this.editExcursion(e);
+//     });
+//   }
 }
 
 export default ExcursionsAPI;
